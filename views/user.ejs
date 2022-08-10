@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLAM BOOK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4b42927fe7.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: aliceblue;
+            font-family: 'Berkshire Swash', cursive;
+            font-size: 200%;
+        }
+        input{
+            height: 5em;
+            width: 600px;
+        }
+        input[type=text]:valid{
+            border: red solid 2px;
+        }
+        #comment{
+            margin-top: 2%;
+            margin-bottom: 3%;
+        }
+        .commentArea{
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            margin-left: 20%;
+        }
+        .commentDiv{
+            margin-top: 2%;
+            font-size: 120%;
+            margin-bottom: 2%;
+        }
+        .commonText{
+            margin-top: 2%;
+        }
+        .reply{
+            margin-top: 1%;
+            font-size: 80%;
+        }
+        .delete{
+            margin-top: 1%;
+            font-size: 80%;
+            margin-left: 5%;
+        }
+        #addComment{
+            font-size: 120%;
+            margin-left: 25%;
+            width: 50%;
+            margin-bottom: 2%;        
+        }
+        .addReply, .cancelReply{
+            font-size: 70%;
+            margin-left: 2%;
+        }
+        .logout{
+            margin-top: -8%;
+            font-size: 100%;
+            background-color: rgb(255, 0, 0);
+            margin-left: 80%;
+        }
+        .edit{
+            margin-left: -10%;
+        }
+        #filter{
+            margin-top: 3%;
+            display: block;        
+        }
+        .filterName{
+            margin-left: -5%;
+            font-size: 70%;
+            padding: 2px;
+        }
+        .search{
+            margin-top: 2%;
+            margin-left: 12%;
+            font-size: 150%;
+            display: block;
+        }
+        .searchButton{
+            font-size: 90%;
+            float: right;
+            margin-top: -8%;
+            margin-right: 30%;
+        }
+        #searchFilter{
+            float: left;
+            margin-top: -7%;
+            margin-left: 8%;
+
+        }   /* Filter */
+        button:hover{
+            cursor: pointer;
+        }
+        a{
+            background-color: rgb(255, 0, 0);
+            font-size: 100%;
+            text-decoration: none;
+            border-width: 4px;
+            border-style: solid;
+        }
+        a:hover{
+            background-color: aqua;
+            cursor: pointer;
+        }
+        .name {
+            font-size: 350%;
+            text-align: center;
+            font-style: oblique;
+            color: red;
+        }
+        .about{
+            display: block;
+        }
+        .aboutData{
+            margin-left: 7%;
+            margin-right: 2%;
+            float: left;
+            width: 70%;
+            border-style: double;
+            border-color: crimson;
+            padding: 2%;
+            border-width: 5px; 
+        }    
+        .rno{
+            width: 100%;
+            margin-left: 20%;
+            float: left;
+            font-size: 150%;
+        }
+    </style>
+</head>
+<body>
+    <div class="search">
+        <a href= "<%= data.sNo %>/edit " class="edit">Edit</a> 
+        <form action="/logout?_method=DELETE" method="POST">
+            <button type="submit" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        </form>
+        <form action="/user/<%= data.sNo %>" method="POST">
+            <select name="type" id="type" class="filter">
+                <option value="none">None</option>
+                <option value="hostel">Hostel</option>
+                <option value="department">Department</option>
+            </select>
+            <input type="text" id="search" name="name" required>
+            <div id="filter"></div>
+            <button type="submit" class="searchButton">SEARCH</button>
+        </form>
+    </div> 
+    
+    <h1 class="name"> <%= data.name %> </h1>
+    
+    <h2 class="aboutHead">ABOUT THE PERSON</h1>
+    
+    <div class="aboutData"> <%= data.memories %></div>
+    
+    <p class="rno"> ROLL NO <%= data.roll_no %> </p> 
+    <p class="rno"><%= data.hostel %> &nbsp; HOSTEL </p>
+    <p class="rno"><%= data.department %> DEPARTMENT</p> <br><br><br><br><br>
+    
+    <h2>COMMENTS :</h2>
+    <br>
+    <div class="commentArea">
+        <label for="comment" name="comment">Add Your Comment</label>
+        <textarea name="comment" id="comment" rows="10" cols="40" ></textarea>
+        <button id="addComment">Add Comment</button>
+        <div id="allComments"></div>
+    
+    </div>
+    
+    <script>
+        var filter = document.getElementById('filter')
+        var type = document.getElementById('type')
+        type.addEventListener('change', ()=>{
+            filter.innerHTML = ''
+            setTimeout(()=>{
+                var input = document.createElement('input')
+                var p = document.createElement('p')
+                if(type.value == 'none'){
+                    filter.innerHTML = ''
+                }
+                else{
+                    p.innerHTML = `${type.value}`
+                    p.className = 'filterName'
+                    input.type = 'type'
+                    input.id = 'searchFilter'
+                    input.name = 'value'
+                    filter.appendChild(p)
+                    filter.appendChild(input)
+                }
+            }, 100)        
+        })
+    
+        window.onload = ()=>{
+            if(localStorage.getItem('comments<%= data.sNo %>') != null){
+                document.getElementById('allComments').innerHTML = localStorage.getItem('comments<%= data.sNo %>')
+            }
+            console.log("<%= data.sNo %> ")
+            localStorage.setItem('currentUser', "<%= data.sNo %>") 
+        }
+    
+        const commentsRegion = document.getElementById('allComments')
+        document.getElementById('addComment').addEventListener('click', (e)=>{
+            addComment(e)
+        })
+    
+        function localise(){
+            localStorage.setItem('comments<%= data.sNo %>', document.getElementById('allComments').innerHTML)
+        }
+    
+        function hasClass(element, checkClass){
+            return element.className.split(' ').indexOf(checkClass) > -1
+        }
+    
+        document.getElementById('allComments').addEventListener('click', (e)=>{
+            if(hasClass(e.target, 'reply')){
+                const parent = e.target.parentElement
+                const div = document.createElement('div')
+                div.className = 'commonText'
+                div.style.marginLeft = (Number.parseInt(parent.style.marginLeft) + 45).toString() + 'px'
+                const textArea = document.createElement('textarea')
+                textArea.style.marginLeft = '20px'
+                const addButton = document.createElement('button')
+                addButton.className = 'addReply'
+                addButton.innerHTML = 'Add'
+                const cancelButton = document.createElement('button')
+                cancelButton.className = 'cancelReply'
+                cancelButton.innerHTML = 'Cancel'
+                div.append(textArea, addButton, cancelButton)
+                parent.appendChild(div)
+    
+            }
+            else if(hasClass(e.target, 'addReply')){
+                addComment(e)
+            }
+            else if(hasClass(e.target, 'cancelReply')){
+                e.target.parentElement.innerHTML = ''
+                localise()
+            }
+            else if(hasClass(e.target, 'delete')){
+                e.target.parentElement.remove()
+                localise()           
+            }                 
+    
+        })
+    
+        function addComment(e){
+            const textBox = document.createElement('div')
+            const reply = document.createElement('button')
+            reply.className = 'reply'
+            reply.innerHTML = 'Reply'
+    
+            const deleteButton = document.createElement('button')
+            deleteButton.className = 'delete'
+            deleteButton.innerHTML = 'Delete'
+    
+            let commentText, commentDiv
+    
+            if(hasClass(e.target.parentElement, 'commentArea')){
+                const commentDiv = document.createElement('div')           
+                commentDiv.className = 'commentDiv'
+                commentDiv.style.marginLeft = 0                                            
+                commentText = document.getElementById('comment').value
+                document.getElementById('comment').value = ''
+                textBox.innerHTML = commentText
+                textBox.style.background = 'orange'
+                commentDiv.append(textBox, reply, deleteButton)
+                commentsRegion.appendChild(commentDiv)
+    
+            }
+            else{
+                commentDiv = e.target.parentElement
+                commentText = e.target.parentElement.firstElementChild.value
+                textBox.innerHTML = commentText
+                textBox.style.background = 'red'
+                commentDiv.innerHTML = ''
+                commentDiv.append(textBox, reply, deleteButton)
+    
+            }
+            localise()
+        }
+            
+    </script>
+</body>
+</html>
+

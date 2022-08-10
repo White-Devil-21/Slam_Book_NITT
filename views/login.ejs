@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLAM BOOK</title>
+    <style>
+        body{
+            margin-top: 3%;
+            font-size: 250%;
+            text-align: center;
+            background-color: aliceblue;
+        }
+        .error{
+            font-size: 60%;
+            color: blue;
+        }
+        h2{
+            margin-right: 25%;
+        }
+        div{
+            margin: 5%;
+        }
+        input{
+            height: 3em;
+        }
+        button{
+            font-size: 80%;
+        }
+        a{
+            text-decoration: none;
+            border-width: 2px;
+            border-color: red;
+            background-color: red;
+            color: aliceblue;
+            border-style: solid;
+            border-radius: 10%;
+    
+        }
+    
+        .home{
+            float: left;
+            margin-left: 10%;
+            font-size: 150%;
+        }
+    
+    </style>
+</head>
+<body>
+    <a href="/" class="home">HOME</a>
+    <h2>LOGIN</h2>
+
+    <% if (messages.error) { %>
+        <div class="error"><%= messages.error %></div>
+    <% } %>
+
+    <form action="/login" method="POST">
+        <div>
+            <label for="email">Email : </label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password : </label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">LOGIN</button>
+    </form>
+
+    <h6>If you haven't registered before, click below to register</h6>
+    <a href="/register">REGISTER</a>
+</body>
+</html>
+
+
+

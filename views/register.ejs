@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLAM BOOK</title>
+    <style>
+        body{
+            margin-top: 2%;
+            font-size: 200%;
+            text-align: center;
+            background-color: aliceblue;
+        }
+        
+        input{
+            height: 3em;
+            width: 20%;
+        }
+    
+        button{
+            font-size: 100%;
+        }
+    
+        h1{
+            margin-right: 20%;
+        }
+    
+        a{
+            text-decoration: none;
+            border-radius: 10%;
+            border-style: solid;
+            background-color: red;
+            color: aliceblue;
+        }
+    
+        .home{
+            float: left;
+            margin-left: 10%;
+            font-size: 150%;
+        }
+    
+    </style>
+    
+</head>
+<body>
+    <a href="/" class="home">HOME</a>
+
+    <h1>REGISTER</h1>    
+
+    <form action="/register" method="POST">
+        <div>
+            <label for="name">Name </label>&emsp; &emsp; &emsp;
+            <input type="text" id="name" name="name" required>
+        </div><hr>
+        <div>
+            <label for="rollno">Roll No </label>&emsp; &emsp; &nbsp;
+            <input type="int" id="rollno" name="rollno" required>
+        </div><hr>
+        <div>
+            <label for="email">Email </label>&emsp; &emsp; &emsp;
+            <input type="email" id="email" name="email" required>
+        </div><hr>
+        <div>
+            <label for="password">Password </label>&emsp; &emsp; 
+            <input type="password" id="password" name="password" required>
+        </div><hr>
+        <button type="submit">REGISTER</button>
+    </form>
+
+    <h6>If you have already registered before, click below to login</h6>
+    <a href="/login">LOGIN</a>
+
+
+</body>
+</html>
