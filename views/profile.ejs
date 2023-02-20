@@ -8,191 +8,102 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/4b42927fe7.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>SLAM BOOK</title>
-    <style>
-        body {
-            background-color: aliceblue;
-            font-family: 'Berkshire Swash', cursive;
-            font-size: 200%;
-            padding: 0;
-            margin-bottom: 10px;
-    
-        }
-        a{
-            text-decoration: none;
-            text-align: center;
-            padding: 2rem;
-        }
-        .logout{
-            margin-top: -3%;
-            font-size: 100%;
-            background-color: rgb(255, 0, 0);
-            margin-left: 80%;
-        }
-        .profile{
-            margin-left: -10%;
-        }
-        #filter{
-            margin-top: 3%;
-            display: block;
-            
-        }
-        .filterName{
-            margin-left: -5%;
-            font-size: 70%;
-            padding: 2px;
-        }
-        .search{
-            margin-left: 12%;
-            margin-top: 2%;
-            font-size: 150%;
-            display: block;
-        }
-        .searchButton{
-            font-size: 90%;
-            float: right;
-            margin-top: -8%;
-            margin-right: 30%;
-        }
-        #searchFilter{
-            float: left;
-            margin-top: -7%;
-            margin-left: 8%;
-    
-        }   /* Filter */
-        input{
-            height: 5em;
-            width: 600px;
-        }
-        input[type=text]:valid{
-            border: red solid 2px
-        }
-        button:hover{
-            cursor: pointer;
-        }
-        .commentHead{
-            float: left;
-        }
-        #comment{
-            margin-top: 2%;
-            margin-bottom: 3%;
-        }
-        .commentArea{
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            margin-left: 20%;
-        }
-        .commentDiv{
-            margin-top: 2%;
-            font-size: 120%;
-            margin-bottom: 2%;
-        }
-        .commonText{
-            margin-top: 2%;
-        }
-        .reply{
-            margin-top: 1%;
-            font-size: 80%;
-        }
-        .delete{
-            margin-top: 1%;
-            font-size: 80%;
-            margin-left: 5%;
-        }
-        .addReply, .cancelReply{
-            font-size: 70%;
-            margin-left: 2%;
-        }
-        #addComment{
-            font-size: 120%;
-            margin-left: 25%;
-            width: 50%;
-            margin-bottom: 2%;
-            
-        }
-        .name {
-            margin-top: 7%;
-            font-size: 300%;
-            text-align: center;
-            font-style: oblique;
-            color: red;
-        }
-        .about{
-            display: block;
-        }
-        .aboutData{
-            margin-left: 7%;
-            margin-right: 2%;
-            float: left;
-            width: 70%;
-            border-style: double;
-            border-color: crimson;
-            padding: 2%;
-            border-width: 5px; 
-        }    
-        .rno{
-            width: 100%;
-            margin-left: 20%;
-            float: left;
-            font-size: 150%;
-        }
-    </style>
 </head>
 <body>
-    <div class="search">
-        <a class="profile" id="profile"><i class="fa-solid fa-user"></i></a>
-        <form action="/logout?_method=DELETE" method="POST">
-                <button type="submit" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
-        </form>
-        <form action="/profile/<%= data.sNo %> " method="POST" id="searchForm">
-            <select name="type" id="type" class="filter">
-                <option value="none">None</option>
-                <option value="hostel">Hostel</option>
-                <option value="department">Department</option>
-            </select>
-            <input type="text" id="search" name="name" required><br>
-            <div id="filter"></div>
-            <button type="submit" class="searchButton">SEARCH</button>
-        </form>
-    </div>
-    
-    <h1 class="name"> <%= data.name %> </h1>
-    <h2 class="aboutHead">ABOUT THE PERSON</h1>
-    <div class="aboutData"> <%= data.memories %></div>
-    
-    <p class="rno"> ROLL NO <%= data.roll_no %></p>
-    <p class="rno"><%= data.hostel %> &nbsp; HOSTEL </p><br>
-    <p class="rno"><%= data.department %> &nbsp; DEPARTMENT</p>
-    
-    <h2>COMMENTS :</h2>
-    
-    <div class="commentArea">
-        <label for="comment" name="comment">Add Your Comment</label>
-        <textarea name="comment" id="comment" rows="10" cols="40"></textarea>
-        <button id="addComment">Add Comment</button>
-        <div id="allComments"></div>
+    <div class="container p-2">
+        <div class="row mt-5">
+            <div class="col">
+                <a class="btn btn-primary btn-lg" id="profile"><i class="fa-solid fa-user"></i></a>
+            </div>
+            <div class="col-8">
+                <form action="/profile/<%= data.sNo %> " method="POST" id="searchForm">
+                    <div class="row fs-3">
+                        <select name="type" class="col-2 fs-5 ms-5" id="type" class="filter">
+                            <option value="none">None</option>
+                            <option value="hostel">Hostel</option>
+                            <option value="department">Department</option>
+                        </select>
+                        <input class="col form-control" type="text" id="search" name="name" required><br>
+                        <div class="col-sm-1 pd-2" id="filter"></div>
+                        <button class="col fs-6 btn btn-info" type="submit" id="find">FIND</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col ms-lg-5">
+                <form action="/logout?_method=DELETE" method="POST">
+                    <button class="btn btn-lg btn-danger" type="submit"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <h1 class="display-1 col"> <%= data.name %> </h1>
+            <p class="rno col display-4 mt-3 text-end me-5"><%= data.roll_no %> </p> 
+        </div>
+        
+        <div class="container border border-info rounded mb-4 p-4">
+            <p class="fs-3 fst-italic">About the Person</p>
+            <div class="fs-1 "> <%= data.memories %></div>
+        </div>
+        
+        <div class="row p-4 my-5">
+            <div class="container border border-danger rounded p-4 col-3 text-center">
+                <p class="display-1" ><i class="fa-solid fa-hotel"></i></p>
+                <h2 class="fs-2"><%= data.hostel %> </h2>
+            </div>
+            <div class="container border border-danger rounded p-4 col-3 text-center">
+                <p class="display-1"><i class="fa-solid fa-synagogue"></i></p>
+                <h2 class="fs-2"><%= data.department %></h2>
+            </div>
+        </div>
+
+        <div class="contaier p-5 border rounded-3 border-primary">
+            <h2 class="display-4">INTERACT ZONE</h2>
+            <div class="commentArea">
+                <div class="row m-5 commentpanel">
+                    <div class="form-floating col">
+                        <textarea name="comment" class="form-control" placeholder="enter your comment" id="floatingTextarea" style="height: 100px;" ></textarea>
+                        <label for="floatingTextarea" name="comment">enter the chat</label>
+                    </div>
+                    <button id="addComment" class="col-2 mx-4 mt-4 btn btn-info" style="height: 35px;" >Add Comment</button>
+                </div>
+                <div class="container-fluid p-3 fs-4" style="width: 600px;" >
+                    <div id="allComments"></div>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script>
         var filter = document.getElementById('filter')
         var type = document.getElementById('type')
+        var search = document.getElementById('find')
         type.addEventListener('change', ()=>{
             filter.innerHTML = ''
             setTimeout(()=>{
                 var input = document.createElement('input')
                 var p = document.createElement('p')
+                filter.className = 'col-sm-1'
+                var div = document.createElement('div')
+                search.className = 'col fs-6 btn btn-info'
                 if(type.value == 'none'){
                     filter.innerHTML = ''
                 }
                 else{
+                    search.className = 'col-sm-1 fs-6 btn btn-info'
+                    filter.className = 'col'
+                    div.className = 'row'
                     p.innerHTML = `${type.value}`
-                    p.className = 'filterName'
+                    p.className = 'col'
                     input.type = 'type'
                     input.id = 'searchFilter'
                     input.name = 'value'
-                    filter.appendChild(p)
-                    filter.appendChild(input)
+                    input.className = 'col'
+                    div.appendChild(p)
+                    div.appendChild(input)
+                    filter.appendChild(div)
                 }
             }, 100)        
         })
@@ -218,24 +129,25 @@
         function hasClass(element, checkClass){
             return element.className.split(' ').indexOf(checkClass) > -1
         }
-    
+
         document.getElementById('allComments').addEventListener('click', (e)=>{
             if(hasClass(e.target, 'reply')){
                 const parent = e.target.parentElement
                 const div = document.createElement('div')
-                div.className = 'commonText'
+                div.className = 'commonText mt-1'
                 div.style.marginLeft = (Number.parseInt(parent.style.marginLeft) + 45).toString() + 'px'
                 const textArea = document.createElement('textarea')
                 textArea.style.marginLeft = '20px'
-                textArea.height = '2em'
+                textArea.style.minWidth = '90px'
+                textArea.className = 'form-control'
                 const addButton = document.createElement('button')
-                addButton.className = 'addReply'
-                addButton.id = 'ajax'
+                addButton.className = 'addReply col-2 btn btn-primary mx-2 mt-1'
+                addButton.style.height = '35px'
                 addButton.innerHTML = 'Add'
                 const cancelButton = document.createElement('button')
-                cancelButton.className = 'cancelReply'
-                cancelButton.id = 'ajax'
+                cancelButton.className = 'cancelReply col-2 btn btn-danger mx-2 mt-1'
                 cancelButton.innerHTML = 'Cancel'
+                cancelButton.style.height = '35px'
                 div.append(textArea, addButton, cancelButton)
                 parent.appendChild(div)
     
@@ -249,32 +161,30 @@
             }
             else if(hasClass(e.target, 'delete')){
                 e.target.parentElement.remove()
-                localise()
-            }            
+                localise()           
+            }                 
     
         })
     
         function addComment(e){
             const textBox = document.createElement('div')
             const reply = document.createElement('button')
-            reply.className = 'reply'
-            reply.id = 'ajax'
+            reply.className = 'reply btn mt-1 btn-primary'
             reply.innerHTML = 'Reply'
     
             const deleteButton = document.createElement('button')
-            deleteButton.className = 'delete'
-            deleteButton.id = 'ajax'
+            deleteButton.className = 'delete float-end mt-1 btn btn-danger'
             deleteButton.innerHTML = 'Delete'
     
             let commentText, commentDiv
-    
-            if(hasClass(e.target.parentElement, 'commentArea')){
+            if(hasClass(e.target.parentElement, 'commentpanel')){
                 const commentDiv = document.createElement('div')           
-                commentDiv.className = 'commentDiv'
+                commentDiv.className = 'commentDiv p-2 my-2 '
                 commentDiv.style.marginLeft = 0                                            
-                commentText = document.getElementById('comment').value
-                document.getElementById('comment').value = ''
+                commentText = document.getElementById('floatingTextarea').value
+                document.getElementById('floatingTextarea').value = ''
                 textBox.innerHTML = commentText
+                textBox.className = 'border rounded border-dark py-sm-1 ps-2'
                 textBox.style.background = 'orange'
                 commentDiv.append(textBox, reply, deleteButton)
                 commentsRegion.appendChild(commentDiv)
@@ -284,15 +194,15 @@
                 commentDiv = e.target.parentElement
                 commentText = e.target.parentElement.firstElementChild.value
                 textBox.innerHTML = commentText
+                textBox.className = 'border rounded border-dark p-1 my-1'
                 textBox.style.background = 'red'
                 commentDiv.innerHTML = ''
                 commentDiv.append(textBox, reply, deleteButton)
     
             }
             localise()
-    
         }
-            
+
     </script>
 </body>
 </html>

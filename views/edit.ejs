@@ -5,65 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SLAM BOOK</title>
-    <style>
-        body{
-            background-color: aliceblue;
-            font-size: 250%;
-            text-align: center;
-        }
-        div{
-            padding: 15px;
-        }
-        label{
-            font-size: 120%;
-            margin-left: 25%;
-
-        }
-        input{
-            float: right;
-            margin-right: 35%;
-            margin-top: 1%;
-            height: 2em;
-        }
-        button{
-            margin-top: 2%;
-            font-size: 90%;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <h2>EDIT YOUR PROFILE HERE</h2>
+    <div class="container text-center fs-1 p-3 mt-4">
+        <h2 class="display-3 mb-3">EDIT YOUR PROFILE HERE</h2>
 
-    <form action="/user/<%= id %>/edit" method="POST">
-        <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" value = "<%=edit.name%>" required></input>
-        </div>
-        <div>
-            <label for="roll_no">Roll No</label>
-            <input type="int" id="roll_no" name="roll_no" value= "<%= edit.roll_no %>" required>
-        </div>
-        <div>
-            <label for="memories">About</label>
-            <input type="text" id="memories" name="memories" value= "<%= edit.memories %>" required>
-        </div>
-        <div>
-            <label for="department">Department</label>
-            <input type="text" id="department" name="department" value= "<%= edit.department %>" required>
-        </div>
-        <div>
-            <label for="hostel">Hostel</label>
-            <input type="text" list="hostels" id="hostel" name="hostel" value= "<%= edit.hostel %>" required>
-            <datalist id="hostels">
-                <option value="Zircon A"></option>
-                <option value="Zircon B"></option>
-                <option value="Zircon C"></option>
-                <option value="Opal"></option>         
-            </datalist>
-        </div>
-
-        <button type="submit">MODIFY</button>
-    </form>
+        <form action="/user/<%= id %>/edit" method="POST">
+            <div>
+                <label class="me-2" for="name">Name</label>
+                <input class="ms-5 my-2 border rounded border-secondary" type="text" id="name" name="name" value = "<%=edit.name%>" required></input>
+            </div>
+            <div>
+                <label for="roll_no">Roll No</label>
+                <input class="ms-4 my-2 border rounded border-secondary" type="int" id="roll_no" name="roll_no" value= "<%= edit.roll_no %>" required>
+            </div>
+            <div>
+                <label class="me-1" for="memories">About</label>
+                <input class="ms-5 my-2 border rounded border-secondary" type="text" id="memories" name="memories" value= "<%= edit.memories %>" required>
+            </div>
+            <div>
+                <label for="department">Department</label>
+                <input class="me-5 my-2 border rounded border-secondary" type="text" id="department" name="department" value= "<%= edit.department %>" required>
+            </div>
+            <div>
+                <label for="hostel">Hostel</label>
+                <input class="ms-5 my-2 border rounded border-secondary" type="text" list="hostels" id="hostel" name="hostel" value= "<%= edit.hostel %>" required>
+                <datalist id="hostels">
+                    <option value="Zircon A"></option>
+                    <option value="Zircon B"></option>
+                    <option value="Zircon C"></option>
+                    <option value="Opal"></option>         
+                </datalist>
+            </div>
+    
+            <button class="btn btn-primary btn-lg" type="submit">MODIFY</button>
+        </form>
+    </div>
 </body>
 </html>
 

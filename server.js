@@ -15,7 +15,7 @@ const localStratergy = require('passport-local').Strategy
 const app = express()
 
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: 'localhost', 
     user: 'root',
     password: 'Delta_21',    
     database: 'slam'
@@ -31,6 +31,8 @@ app.use(express.json())
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({extended: true}))
 app.use(flash())
+
+app.use(express.static("public"));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -163,8 +165,8 @@ app.post('/profile/:index', (req, res)=>{
         })
     }
     else{
-        let sql = `SELECT * from profiles where name = '` + req.body.name + `' and ${req.body.type} = ?`
-        db.query(sql, [req.body.value], (error, rows)=>{
+        let sql = `SELECT * from profiles where name = ? and ${req.body.type} = ?`
+        db.query(sql, [req.body.name, req.body.value], (error, rows)=>{
             try {
                 res.redirect(`/profile/${rows[0].sNo}`)
                 
@@ -174,7 +176,7 @@ app.post('/profile/:index', (req, res)=>{
             
         }) 
     }
-})
+})  
 
 
 app.get('/user/:index', checkAuthenticated, (req, res)=>{
@@ -214,4 +216,6 @@ app.post('/user/:index/edit', (req, res)=>{
     })
 })
 
-app.listen(3000)
+app.listen(3000, ()=>{
+    console.log("Listening on port 3000")
+})
